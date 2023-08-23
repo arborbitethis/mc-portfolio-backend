@@ -1,0 +1,4 @@
+apiVersion: v2
+name: mcportfolio-backend-helm
+description: A Helm chart to deploy the mcportfolio-backend container
+version: 0.1.0

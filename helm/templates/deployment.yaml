@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcportfolio-backend-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: mcportfolio-backend
+  template:
+    metadata:
+      labels:
+        app: mcportfolio-backend
+    spec:
+      containers:
+        - name: mcportfolio-backend
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["uvicorn"]
+          args: ["main:app", "--host", "{{ .Values.app.uvicorn_host }}", "--port", "{{ .Values.app.uvicorn_port }}", "--reload"]
+          ports:
+            - containerPort: {{ .Values.app.uvicorn_port }}

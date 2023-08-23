@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: aks/mcportfolio-backend
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+app:
+  uvicorn_host: "0.0.0.0"
+  uvicorn_port: 8000
+  
