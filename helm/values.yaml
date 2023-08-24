@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: aks/mcportfolio-backend
+  repository: ghcr.io/arborbitethis/mc-portfolio-backend
   tag: latest
   pullPolicy: IfNotPresent
 
