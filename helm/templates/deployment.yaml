@@ -17,6 +17,6 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["uvicorn"]
-          args: ["main:app", "--host", "{{ .Values.app.uvicorn_host }}", "--port", "{{ .Values.app.uvicorn_port }}", "--reload"]
+          args: ["src.main:app", "--host", "{{ .Values.app.uvicorn_host }}", "--port", "{{ .Values.app.uvicorn_port }}", "--reload"]
           ports:
             - containerPort: {{ .Values.app.uvicorn_port }}
