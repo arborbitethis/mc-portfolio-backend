@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/arborbitethis/mc-portfolio-backend
-  tag: <+artifact.tag>
+  tag: <+input.version>
   pullPolicy: IfNotPresent
 
 service:
