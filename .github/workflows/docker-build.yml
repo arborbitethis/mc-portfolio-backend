@@ -23,7 +23,7 @@ jobs:
     #   echo EXAMPLE_ENV_VAR="var_value" >> .env
 
     - name: Add SHORT_SHA env property with commit short sha
-      run: echo "SHORT_SHA=`echo ${{ github.sha }} | cut -c1-8`" >> $GITHUB_ENV
+      run: echo "SHORT_SHA=`echo ${{ github.sha }} | cut -c1-5`" >> $GITHUB_ENV
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
