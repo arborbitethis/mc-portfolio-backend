@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mcportfolio-backend-deployment
+  name: mc-portfolio-backend-deployment
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: mcportfolio-backend
+      app: mc-portfolio-backend
   template:
     metadata:
       labels:
-        app: mcportfolio-backend
+        app: mc-portfolio-backend
     spec:
       containers:
-        - name: mcportfolio-backend
+        - name: mc-portfolio-backend
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["uvicorn"]

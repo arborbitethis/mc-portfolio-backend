@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mcportfolio-backend-service
+  name: mc-portfolio-backend-service
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.app.uvicorn_port }}
   selector:
-    app: mcportfolio-backend
+    app: mc-portfolio-backend
     
