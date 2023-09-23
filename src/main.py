@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routes import portfolio_routes
+from .routes import portfolio_routes, timelapse_routes
 
 
 app = FastAPI(
@@ -11,3 +11,4 @@ app = FastAPI(
 wrapper = FastAPI()
 
 app.include_router(portfolio_routes.router)
+app.include_router(timelapse_routes.router)
