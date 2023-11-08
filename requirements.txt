@@ -4,3 +4,7 @@ uvicorn[standard]
 opentelemetry-distro
 requests
 python-dotenv
+databases
+sqlalchemy
+asyncpg
+psycopg2
