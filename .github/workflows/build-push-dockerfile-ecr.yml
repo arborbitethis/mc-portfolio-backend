@@ -30,13 +30,13 @@ jobs:
         role-to-assume: arn:aws:iam::713984691710:role/github_action_role
         aws-region: ${{ env.AWS_REGION }}
         
-    - name: Login to Amazon ECR
+    - name: ECR Login
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
       with:
         mask-password: 'true'
 
-    - name: Build, tag, and push docker image to Amazon ECR
+    - name: Build and push docker image to ECR
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         REPOSITORY: ${{ env.ECR_REPOSITORY }}
@@ -45,9 +45,3 @@ jobs:
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-    # - name: Build and push Docker image
-    #   uses: docker/build-push-action@v2
-    #   with:
-    #     context: .
-    #     push: true
-    #     tags: ${{ env.ECR_REPOSITORY }}:${{ github.sha }}

@@ -11,6 +11,3 @@ def get_assets():
     assets = mux_api.get_assets()
     return {"assets": assets}
 
-
-
-    
