@@ -7,7 +7,8 @@ on:
 
 env:
   AWS_REGION: us-east-2
-  ECR_REPOSITORY: mc-portfolio-backend
+  API_ECR_REPOSITORY: mc-portfolio-backend
+  DB_ECR_REPOSITORY: mc-portfolio-backend-postgres
 
 jobs:
   deploy:
@@ -43,7 +44,7 @@ jobs:
     - name: Build and push py faast api docker image to ECR
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        REPOSITORY: ${{ env.ECR_REPOSITORY }}
+        REPOSITORY: ${{ env.API_ECR_REPOSITORY }}
         IMAGE_TAG: ${{ steps.short_sha.outputs.sha_short }}
       run: |
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
@@ -52,7 +53,7 @@ jobs:
     - name: Build and push postgres docker image to ECR
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        POSTGRES_REPOSITORY: '${{ env.ECR_REPOSITORY }}-postgres'
+        POSTGRES_REPOSITORY: '${{ env.DB_ECR_REPOSITORY }}'
         IMAGE_TAG: ${{ steps.short_sha.outputs.sha_short }} 
       run: |
         docker build -t $REGISTRY/$POSTGRES_REPOSITORY:$IMAGE_TAG ./db
