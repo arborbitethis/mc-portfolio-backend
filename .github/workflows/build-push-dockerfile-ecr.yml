@@ -7,7 +7,7 @@ on:
 
 env:
   AWS_REGION: us-east-2
-  ECR_REPOSITORY: mc-portfolio-ecr
+  ECR_REPOSITORY: mc-portfolio-backend
 
 jobs:
   deploy:
@@ -20,6 +20,10 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Get short SHA
+      id: short_sha
+      run: echo "::set-output name=sha_short::$(echo ${GITHUB_SHA} | cut -c1-7)"
 
     - name: Create .env file
       run: echo "MUX_TOKEN_ID=${{ secrets.MUX_TOKEN_ID }}" >> .env && echo "MUX_TOKEN_SECRET=${{ secrets.MUX_TOKEN_SECRET }}" >> .env
@@ -36,12 +40,21 @@ jobs:
       with:
         mask-password: 'true'
 
-    - name: Build and push docker image to ECR
+    - name: Build and push py faast api docker image to ECR
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         REPOSITORY: ${{ env.ECR_REPOSITORY }}
-        IMAGE_TAG: ${{ github.sha }}
+        IMAGE_TAG: ${{ steps.short_sha.outputs.sha_short }}
       run: |
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
+    - name: Build and push postgres docker image to ECR
+      env:
+        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        POSTGRES_REPOSITORY: '${{ env.ECR_REPOSITORY }}-postgres'
+        IMAGE_TAG: ${{ steps.short_sha.outputs.sha_short }} 
+      run: |
+        docker build -t $REGISTRY/$POSTGRES_REPOSITORY:$IMAGE_TAG ./db
+        docker push $REGISTRY/$POSTGRES_REPOSITORY:$IMAGE_TAG
 
