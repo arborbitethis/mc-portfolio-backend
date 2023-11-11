@@ -41,7 +41,7 @@ jobs:
       with:
         mask-password: 'true'
 
-    - name: Build and push py faast api docker image to ECR
+    - name: Build and push py fastapi docker image to ECR
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         REPOSITORY: ${{ env.API_ECR_REPOSITORY }}
@@ -49,7 +49,9 @@ jobs:
       run: |
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-
+        docker tag $REGISTRY/$REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:latest
+        docker push $REGISTRY/$REPOSITORY:latest
+  
     - name: Build and push postgres docker image to ECR
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -58,4 +60,6 @@ jobs:
       run: |
         docker build -t $REGISTRY/$POSTGRES_REPOSITORY:$IMAGE_TAG ./db
         docker push $REGISTRY/$POSTGRES_REPOSITORY:$IMAGE_TAG
-
+        docker tag $REGISTRY/$POSTGRES_REPOSITORY:$IMAGE_TAG $REGISTRY/$POSTGRES_REPOSITORY:latest
+        docker push $REGISTRY/$POSTGRES_REPOSITORY:latest
+      
